@@ -7,6 +7,7 @@ angular.module('sL', [
   'sL.searchBar',
   'sL.services',
   'sL.auth',
+  'sL.d3',
   'ui.bootstrap',
   'ui.router',
   'ngAnimate',

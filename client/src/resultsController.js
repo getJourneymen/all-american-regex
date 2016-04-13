@@ -2,13 +2,14 @@
 
 angular.module('sL.resultsController', [])
 
-.controller('ResultsController', function($scope, $state, Data, News, SearchSwap, swap, API) {
+.controller('ResultsController', function($scope, $state, Data, News, SearchSwap, swap, API,d3Svc) {
   $scope.heading = 'Sentiment Score';
   $scope.data = Data.newsLinks;
+  console.log('results controller Data:',Data.newsLinks)
   $scope.predicate = '';
   $scope.reverse = true;
   $scope.totals = {};
-
+d3Svc.drawChart()
   $scope.order = function(predicate) {
     $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
     $scope.predicate = predicate;
@@ -18,6 +19,7 @@ angular.module('sL.resultsController', [])
   var getSentimentTotals = function() {
     API.sentimentTotals().then(function(resp) {
         Data.totals = resp.data;
+        console.log('Data totals:', resp.data)
         Data.totals.forEach(function(val, ind) {
           if (!$scope.totals[val.query]) {
             $scope.totals[val.query] = {
@@ -53,8 +55,10 @@ angular.module('sL.resultsController', [])
   var getImages = function() {
     SearchSwap.getItems(swap).then(function(resp) {
         Data.newsLinks.data = resp;
+        console.log('getImages resp:', resp)
         SearchSwap.getImages(Data.newsLinks.data);
         SearchSwap.getScores(Data.input);
+        console.log('SearchSwap.getScores:' ,  SearchSwap.getScores(Data.input))
         getSentimentTotals();
       })
       .catch(function(err) {
