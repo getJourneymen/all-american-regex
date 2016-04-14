@@ -117,6 +117,7 @@ angular.module('sL.services', [])
       console.log('capDataObj', capDataObj);
       console.log('resolve capDataObj', resolve );
       resolve(capDataObj);
+
     });
   }
 
@@ -130,6 +131,7 @@ angular.module('sL.services', [])
   this.input = '';
   this.thumbnails = [];
   this.totals = [];
+  this.d3Chart = [];
 
 })
 .service('About', function() {

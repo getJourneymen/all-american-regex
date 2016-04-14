@@ -5,6 +5,7 @@ angular.module('sL.resultsController', [])
 .controller('ResultsController', function($scope, $state, Data, News, SearchSwap, swap, API, CapData) {
   $scope.heading = 'Sentiment Score';
   $scope.data = Data.newsLinks;
+  $scope.chartData = Data.d3Chart;
   // console.log('results controller Data:',Data.newsLinks)
   $scope.predicate = '';
   $scope.reverse = true;
@@ -55,15 +56,18 @@ angular.module('sL.resultsController', [])
   }
 
   var getImages = function() {
-    SearchSwap.getItems(swap).then(function(resp) {
+    SearchSwap.getItems(swap).then(function(resp){
       Data.newsLinks.data = resp;
 
       console.log('getImages resp:', resp)
       SearchSwap.getImages(Data.newsLinks.data);
       SearchSwap.getScores(Data.input)
-      .then(function(){
-        // alert(JSON.stringify(Data.newsLinks.data))
-        CapData.setData(Data.newsLinks.data);
+      .then(function(resp){
+
+        //alert(JSON.stringify(Data.newsLinks.data))
+        //CapData.setData(Data.newsLinks.data);
+        //$scope.chartData = Object.assign({Data.newsLinks.data});
+      //  alert(JSON.stringify($scope.chartData))
         getSentimentTotals();
       })
     })

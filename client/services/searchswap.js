@@ -100,7 +100,7 @@ return Promise.all(
           datum.sortBy.openness = per.sortBy.openness;
           datum.sortBy.agreeableness = per.sortBy.agreeableness;
 
-
+          Data.d3Chart.push(Object.assign({}, datum));
         }
         //the reason we need the net four functions is because to get more accurate data we send a batch of sentences
         //so we get back an array of unknown length that we have to average

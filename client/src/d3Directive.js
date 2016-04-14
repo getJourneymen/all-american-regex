@@ -1,10 +1,14 @@
 angular.module('sL.directives', ['d3'])
-  .directive('pieChart', ['d3Svc', 'CapData',
-    function(d3Svc, CapData) {
+  .directive('pieChart', ['d3Svc', 'CapData', 'Data',
+    function(d3Svc, CapData, Data) {
       return {
         restrict: 'EA',
+        scope: {
+          chartData: '='
+        },
         link: function(scope, element){
-          console.log('scope', scope);
+            alert(JSON.stringify(scope.chartData));
+
               var svg = d3.select(element[0])
                 .append("svg")
                 .append("g")
@@ -42,7 +46,7 @@ angular.module('sL.directives', ['d3'])
               };
 
               var color = d3.scale.ordinal()
-                .domain([scope.data.data[0].headline, "Emotion Expressed", "Political Leaning", "Author's Personality"])
+                .domain(['pie', "Emotion Expressed", "Political Leaning", "Author's Personality"])
                 .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
               function randomData() {
@@ -155,7 +159,9 @@ angular.module('sL.directives', ['d3'])
                 polyline.exit()
                   .remove();
               };
-
+// scope.$watch('chartData', function(newVals, oldVals){
+//   return scope.render(newVals)
+// }, true)
 
         }//close link
       } //end of return
