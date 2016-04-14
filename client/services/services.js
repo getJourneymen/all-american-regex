@@ -109,10 +109,13 @@ angular.module('sL.services', [])
 .factory('CapData', function(){
   var capDataObj = {}
   var setData = function(dataToSet){
+    console.log('dataToSet', dataToSet);
     capDataObj = dataToSet;
   }
   var getData= function(){
     return new Promise(function(resolve,reject) {
+      console.log('capDataObj', capDataObj);
+      console.log('resolve capDataObj', resolve );
       resolve(capDataObj);
     });
   }

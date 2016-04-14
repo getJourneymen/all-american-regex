@@ -63,8 +63,8 @@ angular.module('sL.statechange', [])
   }
 
   var getScores = function(query) {
-
-    var array = Data.newsLinks.data.map(function(datum) {
+return Promise.all(
+    Data.newsLinks.data.map(function(datum) {
       return API.updateScore(datum, query).then(function(scores) {
         if(!scores) {
           // console.log('no scores data!');
@@ -106,9 +106,15 @@ angular.module('sL.statechange', [])
         //so we get back an array of unknown length that we have to average
 
       });
-    });
+    }))
+// .then(function(resp){
+//   console.log('promise.all results', resp)
+// })
+// .catch(function(){
+//   console.log('promise.all didnt work')
+// })
 
-return Promise.all(array)
+// return Promise.all(array)
 
   };
 

@@ -56,22 +56,20 @@ angular.module('sL.resultsController', [])
 
   var getImages = function() {
     SearchSwap.getItems(swap).then(function(resp) {
-        Data.newsLinks.data = resp;
+      Data.newsLinks.data = resp;
 
-        console.log('getImages resp:', resp)
-        SearchSwap.getImages(Data.newsLinks.data);
-        SearchSwap.getScores(Data.input)
-         .then(function(resp){
-           console.log('Data.newsLinks.data', Data.newsLinks.data)
-            CapData.setData(Data.newsLinks.data);
-         })
-
-        console.log('SearchSwap.getScores:' ,  SearchSwap.getScores(Data.input))
+      console.log('getImages resp:', resp)
+      SearchSwap.getImages(Data.newsLinks.data);
+      SearchSwap.getScores(Data.input)
+      .then(function(){
+        // alert(JSON.stringify(Data.newsLinks.data))
+        CapData.setData(Data.newsLinks.data);
         getSentimentTotals();
       })
-      .catch(function(err) {
-        console.log('getImages err === ', err);
-      });
+    })
+    .catch(function(err) {
+      console.log('getImages err === ', err);
+    });
   };
 
   $scope.getLinks = function() {};
