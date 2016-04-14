@@ -2,14 +2,16 @@
 
 angular.module('sL.resultsController', [])
 
-.controller('ResultsController', function($scope, $state, Data, News, SearchSwap, swap, API,d3Svc) {
+.controller('ResultsController', function($scope, $state, Data, News, SearchSwap, swap, API, CapData) {
   $scope.heading = 'Sentiment Score';
   $scope.data = Data.newsLinks;
-  console.log('results controller Data:',Data.newsLinks)
+  // console.log('results controller Data:',Data.newsLinks)
   $scope.predicate = '';
   $scope.reverse = true;
   $scope.totals = {};
-d3Svc.drawChart()
+  console.log('What is swap?:', swap)
+  // var swap = swap;
+
   $scope.order = function(predicate) {
     $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
     $scope.predicate = predicate;
@@ -19,7 +21,7 @@ d3Svc.drawChart()
   var getSentimentTotals = function() {
     API.sentimentTotals().then(function(resp) {
         Data.totals = resp.data;
-        console.log('Data totals:', resp.data)
+        // console.log('Data totals:', resp.data)
         Data.totals.forEach(function(val, ind) {
           if (!$scope.totals[val.query]) {
             $scope.totals[val.query] = {
@@ -44,7 +46,7 @@ d3Svc.drawChart()
         Data.totals.sort(function(a, b) {
           return a.score < b.score;
         })
-        console.log('scope totals! = ', Data.totals);
+        // console.log('scope totals! = ', Data.totals);
       })
       .catch(function(err) {
         console.log(err);
@@ -55,9 +57,15 @@ d3Svc.drawChart()
   var getImages = function() {
     SearchSwap.getItems(swap).then(function(resp) {
         Data.newsLinks.data = resp;
+
         console.log('getImages resp:', resp)
         SearchSwap.getImages(Data.newsLinks.data);
-        SearchSwap.getScores(Data.input);
+        SearchSwap.getScores(Data.input)
+         .then(function(resp){
+           console.log('Data.newsLinks.data', Data.newsLinks.data)
+            CapData.setData(Data.newsLinks.data);
+         })
+
         console.log('SearchSwap.getScores:' ,  SearchSwap.getScores(Data.input))
         getSentimentTotals();
       })

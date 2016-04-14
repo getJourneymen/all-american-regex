@@ -52,10 +52,10 @@ angular.module('sL.statechange', [])
       datum.color = '#f7d305';
     }
     else if (datum.score.score < 80) {
-      datum.color = '#00cc00';   
+      datum.color = '#00cc00';
     }
     else if (datum.score.score < 90) {
-      datum.color = '#00b300'; 
+      datum.color = '#00b300';
     }
     else {
       datum.color = '#009933';
@@ -63,10 +63,11 @@ angular.module('sL.statechange', [])
   }
 
   var getScores = function(query) {
-    Data.newsLinks.data.forEach(function(datum) {
-      API.updateScore(datum, query).then(function(scores) {
+
+    var array = Data.newsLinks.data.map(function(datum) {
+      return API.updateScore(datum, query).then(function(scores) {
         if(!scores) {
-          console.log('no scores data!');
+          // console.log('no scores data!');
         }
         else {
           var s = News.averageScore(scores);
@@ -98,15 +99,21 @@ angular.module('sL.statechange', [])
           datum.sortBy.ext = per.sortBy.extraversion;
           datum.sortBy.openness = per.sortBy.openness;
           datum.sortBy.agreeableness = per.sortBy.agreeableness;
+
+
         }
         //the reason we need the net four functions is because to get more accurate data we send a batch of sentences
         //so we get back an array of unknown length that we have to average
+
       });
     });
+
+return Promise.all(array)
+
   };
 
     var getImages = function(articles) {
-      console.log('articles ', articles)
+      // console.log('articles ', articles)
       for (var ind = 0; ind < articles.length; ++ind) {
         if(articles[ind]) {
           API.getImages(articles[ind].url, ind);

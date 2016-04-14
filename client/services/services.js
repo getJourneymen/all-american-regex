@@ -7,7 +7,7 @@ angular.module('sL.services', [])
   var averageScore = function(scoresObject) {
     if(!scoresObject.data.sentiment) {
       console.log('no data!')
-      return; 
+      return;
     }
     else {
       var temp = 0;
@@ -35,7 +35,7 @@ angular.module('sL.services', [])
 
     var temp = scores.reduce(function(newObj, spectrum){
       for (var key in spectrum){
-        newObj[key] += spectrum[key]; 
+        newObj[key] += spectrum[key];
       }
       return newObj;
     });
@@ -106,7 +106,22 @@ angular.module('sL.services', [])
     signin: signin
   };
 })
+.factory('CapData', function(){
+  var capDataObj = {}
+  var setData = function(dataToSet){
+    capDataObj = dataToSet;
+  }
+  var getData= function(){
+    return new Promise(function(resolve,reject) {
+      resolve(capDataObj);
+    });
+  }
 
+  return {
+    setData:setData,
+    getData:getData
+  }
+})
 .service('Data', function() {
   this.newsLinks = {};
   this.input = '';

@@ -89,8 +89,10 @@
         <!-- /panel-heading -->
       </div>
       <div class="panel-body">
+
         <div class="list-group" ng-repeat="item in data.data | orderBy:predicate:reverse">
           <ul class="list-group">
+
             <li class="list-group-item">
               <div class="media media-news">
                 <!-- news image -->
@@ -113,6 +115,9 @@
                 </div>
                 <!-- sentiment score visual -->
                 <div class="media-right">
+                 <pie-chart></pie-chart>
+                </div>
+                <!-- <div class="media-right">
                   <ul class="list-group list-scores">
                     <li class="list-group-item lgi">
                       <span class="sentiment">GENERAL SENTIMENT</span>
@@ -148,7 +153,7 @@
                           <span uib-tooltip="{{item.tt.personality}}" tooltip-class="addclasshere">{{item.personality.score}}%
                             {{item.personality.renameThis}}</span>
                         </div>
-                      </div>
+                      </div> -->
                     </li>
                   </ul>
                   <!-- /media-right -->
