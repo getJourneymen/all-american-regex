@@ -11,10 +11,9 @@ var Path = require('path');
 var Search = require('./models/search.js');
 var User = require('./models/user.js');
 var Result = require('./models/result.js');
-var Session = require('./models/session.js');
 var KnexSessionStore = require('connect-session-knex')(session)
 
-var store = new KnexSessionStore({knex:db,tablename:'ssessions'});
+var store = new KnexSessionStore({knex:db,tablename:'sessions'});
 
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
@@ -171,12 +170,12 @@ app.post('/api/users/signup', function(req, res) {
             password: password
           })
           .then(function(newUser) {
-            return Session.create(newUser.id);
+            req.login(newUser.id, function(err) {
+              if (err) { return next(err); }
+              console.log("Logged in new user", newUser.id)
+              return res.status(200).send();
+            });
           })
-          .then(function(newSession) {
-            res.cookie('sessionId', newSession.id);
-            return res.redirect('/');
-          });
       }
     });
 });
