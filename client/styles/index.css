@@ -63,14 +63,6 @@ table {
 
 /* begin: signin & signup pages*/
 
-.inputdata input {
-  font-size: 15px;
-  display: block;
-  width: 445px;
-  margin-bottom: 5px;
-  padding: 10px;
-  text-align: center;
-}
 
 .middle {
   margin-right: 30%;
@@ -186,4 +178,8 @@ ul {
   -webkit-transition: width .6s ease;
   -o-transition: width .6s ease;
   transition: width .6s ease;
+}
+
+.middled {
+  margin: 0 auto;
 }
