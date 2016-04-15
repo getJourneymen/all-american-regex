@@ -8,6 +8,8 @@ angular.module('sL.directives', ['d3'])
         // },
         controller: ['$scope','$element', function($scope, $element) {
           $scope.count = 0;
+          $scope.articleData;
+
           $scope.setCount = function(index) {
             $scope.count = index;
             console.log('count', $scope.count);
@@ -15,6 +17,7 @@ angular.module('sL.directives', ['d3'])
           };
           $scope.drawTable = function() {
             // alert(JSON.stringify($scope.chartData.data[0].emotion.score));
+            console.log('entire data obj', $scope.data.data);
             var svg = d3.select($element[0])
                 .append("svg")
                 .append("g")
@@ -52,17 +55,24 @@ angular.module('sL.directives', ['d3'])
               };
 
               var color = d3.scale.ordinal()
-                .domain([$scope.data.data[$scope.count].score.score +"%" , $scope.data.data[$scope.count].emotion.score +"%", $scope.data.data[$scope.count].political.score +"%", $scope.data.data[$scope.count].personality.score +"%"])
-                .range(["#0086b3", "#007399", "#004d66", "#6b486b", "#00394d"]);
 
               function randomData() {
+                $scope.articleData = $scope.data.data[3-($scope.count)];
+                color
+                  .domain([
+                    $scope.articleData.score.score +"%" ,
+                    $scope.articleData.emotion.score +"%",
+                    $scope.articleData.political.score +"%",
+                    $scope.articleData.personality.score +"%"
+                   ])
+                  .range(["#0086b3", "#007399", "#004d66", "#6b486b", "#00394d"]);
 
                 console.log('count in randomData call: ',$scope.count)
                 var labels = color.domain();
                 return labels.map(function(label) {
                   return {
                     label: label,
-                    value: Math.random()
+                    value: parseInt(label)
                   }
                 });
               }
