@@ -9,6 +9,7 @@ angular.module('sL.searchBar', [])
 
     $scope.getLinks = function() {
       Data.input = $scope.input;
+      $state.go('results');
     };
     
     $scope.getTrends = function() {

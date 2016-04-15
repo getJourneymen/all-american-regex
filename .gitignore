@@ -31,4 +31,5 @@ notes/
 client/lib/
 server/.DS_Store
 server/modules/.DS_Store
+sList_dev/
 *.DS_Store

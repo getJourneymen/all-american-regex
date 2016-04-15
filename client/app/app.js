@@ -46,7 +46,7 @@ angular.module('sL', [
       templateUrl: 'views/searchBar.html',
       controller: 'SearchBar'
     })
-    .state('searchBar.results', {
+    .state('results', {
       url: '/results',
       templateUrl: 'views/searchBar.results.html',
       controller: 'ResultsController',

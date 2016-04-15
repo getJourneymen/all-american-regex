@@ -11,7 +11,8 @@
             <div class="form-group">
               <input type="text" class="form-control form-search" placeholder="Enter a political news topic..." ng-model="input" required>
             </div>
-            <a ui-sref=".results" ui-sref-opts="{reload: true}">
+            <!-- <a ui-sref=".results" ui-sref-opts="{reload: true}"> -->
+            <a>
               <button type="submit" class="btn btn-sm btn-info btn-go" ng-click="getLinks()" ng-disabled="searchBar.$invalid">
                 {{buttonText}}
                 <i class="fa fa-play"></i>
