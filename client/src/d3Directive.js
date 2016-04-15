@@ -20,8 +20,8 @@ angular.module('sL.directives', ['d3'])
               svg.append("g")
                 .attr("class", "lines");
 
-              var width = 200,
-                height = 150,
+              var width = 500,
+                height = 400,
                 radius = Math.min(width, height) / 2;
 
 
@@ -39,7 +39,7 @@ angular.module('sL.directives', ['d3'])
                 .innerRadius(radius * 0.9)
                 .outerRadius(radius * 0.9);
 
-              svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+              svg.attr("transform", "translate(" + width / 1.5 + "," + height / 2 + ")");
 
               var key = function(d) {
                 return d.data.label;

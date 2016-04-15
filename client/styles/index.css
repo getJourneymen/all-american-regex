@@ -1,6 +1,8 @@
 body {
   padding-bottom: 20px;
   background-color: #f5f8fa;
+  overflow: hidden;
+  height: 100vh;
 }
 
 .jumbotron {
@@ -187,10 +189,25 @@ ul {
   -o-transition: width .6s ease;
   transition: width .6s ease;
 }
-.media-body {
+.leftview {
+  position: absolute;
+  left: -8%;
+  width: 70%;
+  overflow: scroll;
+  height: 100%;
+}
+.media-left {
+  width: 30%;
+}
+.slide {
+  height: 100%;
+}
+.rightview {
+  position: absolute;
+  right: -5%;
+  height: 100%;
   width: 40%;
 }
-
 /*D3 stylying
 */
 /*.media-right {
