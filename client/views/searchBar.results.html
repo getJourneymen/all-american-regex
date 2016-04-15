@@ -90,7 +90,7 @@
       </div>
       <div class="panel-body">
 
-        <div class="list-group" ng-repeat="item in data.data | orderBy:predicate:reverse">
+        <div class="list-group" ng-click="changeListener(item, $index)" ng-repeat="item in data.data | orderBy:predicate:reverse">
           <ul class="list-group">
 
             <li class="list-group-item">

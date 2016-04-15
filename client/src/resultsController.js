@@ -17,7 +17,10 @@ angular.module('sL.resultsController', [])
     $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
     $scope.predicate = predicate;
   };
-
+  // $scope.changeListener = function(data) {
+  //   pieChart.change(data)
+  //   console.log('this should be item',data);
+  // }
 
   var getSentimentTotals = function() {
     API.sentimentTotals().then(function(resp) {

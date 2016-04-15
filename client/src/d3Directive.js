@@ -7,6 +7,11 @@ angular.module('sL.directives', ['d3'])
         //   chartData: '='
         // },
         controller: ['$scope','$element', function($scope, $element) {
+          $scope.count = 0;
+          $scope.setCount = function(index) {
+            $scope.count = index;
+            console.log('count', $scope.count);
+          };
           $scope.drawTable = function() {
             // alert(JSON.stringify($scope.chartData.data[0].emotion.score));
             var svg = d3.select($element[0])
@@ -20,8 +25,8 @@ angular.module('sL.directives', ['d3'])
               svg.append("g")
                 .attr("class", "lines");
 
-              var width = 500,
-                height = 400,
+              var width = 300,
+                height = 300,
                 radius = Math.min(width, height) / 2;
 
 
@@ -39,14 +44,14 @@ angular.module('sL.directives', ['d3'])
                 .innerRadius(radius * 0.9)
                 .outerRadius(radius * 0.9);
 
-              svg.attr("transform", "translate(" + width / 1.5 + "," + height / 2 + ")");
+              svg.attr("transform", "translate(" + width + "," + height*1.5 + ")");
 
               var key = function(d) {
                 return d.data.label;
               };
 
               var color = d3.scale.ordinal()
-                .domain([$scope.data.data[0].emotion.score, "Emotion Expressed", "Political Leaning", "Author's Personality"])
+                .domain([$scope.data.data[$scope.count].emotion.score , "Emotion Expressed", "Political Leaning", "Author's Personality"])
                 .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
               function randomData() {
@@ -58,12 +63,18 @@ angular.module('sL.directives', ['d3'])
                   }
                 });
               }
+              $scope.changeListener = function(data, index) {
+                $scope.setCount(index)
+                change(randomData());
+              }
 
               change(randomData());
 
-              d3.select(".randomize")
+
+              d3.select(".list-group.item")
                 .on("click", function() {
                   change(randomData());
+                  console.log('item', $scope.item)
                 });
 
 
@@ -163,7 +174,7 @@ angular.module('sL.directives', ['d3'])
         }],
         link: function(scope, element, attr){
           setTimeout(function() {
-            scope.drawTable(element[0]);
+            scope.drawTable();
           }, 2000);
 
 // scope.$watch('chartData', function(newVals, oldVals){
