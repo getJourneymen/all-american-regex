@@ -63,17 +63,17 @@ angular.module('sL.resultsController', [])
       SearchSwap.getImages(Data.newsLinks.data);
       SearchSwap.getScores(Data.input)
       .then(function(resp){
-
+          Data.d3Chart.push(Object.assign({}, resp));
         //alert(JSON.stringify(Data.newsLinks.data))
         //CapData.setData(Data.newsLinks.data);
-        //$scope.chartData = Object.assign({Data.newsLinks.data});
+        // $scope.chartData = Object.assign({Data.newsLinks.data});
       //  alert(JSON.stringify($scope.chartData))
         getSentimentTotals();
       })
-    })
     .catch(function(err) {
       console.log('getImages err === ', err);
     });
+    })
   };
 
   $scope.getLinks = function() {};

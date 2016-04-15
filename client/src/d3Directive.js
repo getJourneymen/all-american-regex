@@ -1,15 +1,15 @@
 angular.module('sL.directives', ['d3'])
   .directive('pieChart', ['d3Svc', 'CapData', 'Data',
-    function(d3Svc, CapData, Data) {
+    function(d3Svc, CapData, Data ) {
       return {
         restrict: 'EA',
-        scope: {
-          chartData: '='
-        },
-        link: function(scope, element){
-            alert(JSON.stringify(scope.chartData));
-
-              var svg = d3.select(element[0])
+        // scope: {
+        //   chartData: '='
+        // },
+        controller: ['$scope','$element', function($scope, $element) {
+          $scope.drawTable = function() {
+            // alert(JSON.stringify($scope.chartData.data[0].emotion.score));
+            var svg = d3.select($element[0])
                 .append("svg")
                 .append("g")
 
@@ -46,7 +46,7 @@ angular.module('sL.directives', ['d3'])
               };
 
               var color = d3.scale.ordinal()
-                .domain(['pie', "Emotion Expressed", "Political Leaning", "Author's Personality"])
+                .domain([$scope.data.data[0].emotion.score, "Emotion Expressed", "Political Leaning", "Author's Personality"])
                 .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
               function randomData() {
@@ -159,6 +159,13 @@ angular.module('sL.directives', ['d3'])
                 polyline.exit()
                   .remove();
               };
+          }
+        }],
+        link: function(scope, element, attr){
+          setTimeout(function() {
+            scope.drawTable(element[0]);
+          }, 2000);
+
 // scope.$watch('chartData', function(newVals, oldVals){
 //   return scope.render(newVals)
 // }, true)
