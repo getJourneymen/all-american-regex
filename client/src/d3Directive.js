@@ -11,6 +11,7 @@ angular.module('sL.directives', ['d3'])
           $scope.setCount = function(index) {
             $scope.count = index;
             console.log('count', $scope.count);
+            console.log('Data object:' , $scope.data.data[$scope.count] )
           };
           $scope.drawTable = function() {
             // alert(JSON.stringify($scope.chartData.data[0].emotion.score));
@@ -51,10 +52,12 @@ angular.module('sL.directives', ['d3'])
               };
 
               var color = d3.scale.ordinal()
-                .domain([$scope.data.data[$scope.count].emotion.score , "Emotion Expressed", "Political Leaning", "Author's Personality"])
-                .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+                .domain([$scope.data.data[$scope.count].score.score +"%" , $scope.data.data[$scope.count].emotion.score +"%", $scope.data.data[$scope.count].political.score +"%", $scope.data.data[$scope.count].personality.score +"%"])
+                .range(["#0086b3", "#007399", "#004d66", "#6b486b", "#00394d"]);
 
               function randomData() {
+
+                console.log('count in randomData call: ',$scope.count)
                 var labels = color.domain();
                 return labels.map(function(label) {
                   return {
@@ -65,17 +68,18 @@ angular.module('sL.directives', ['d3'])
               }
               $scope.changeListener = function(data, index) {
                 $scope.setCount(index)
-                change(randomData());
+                  change(randomData());
               }
 
               change(randomData());
 
 
-              d3.select(".list-group.item")
-                .on("click", function() {
-                  change(randomData());
-                  console.log('item', $scope.item)
-                });
+              // d3.select(".list-group.item")
+              //   .on("click", function() {
+              //     change(randomData());
+              //    // console.log('item', $scope.item)
+              //     console.log('count in on click:', $scope.count)
+              //   });
 
 
               function change(data) {
