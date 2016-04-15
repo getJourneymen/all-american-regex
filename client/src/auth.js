@@ -5,13 +5,24 @@ angular.module('sL.auth', [])
 .controller('AuthController', function ($rootScope, $scope, $window, $state, Auth) {
   $scope.user = {};
   $scope.message = '';
+  $rootScope.loggedInUser = $rootScope.loggedIn ? Auth.whoMe() : '';
 
   $scope.signin = function() {
     Auth.signin($scope.user)
-      .then(function (token) {
-        $window.localStorage.setItem('com.sL', true);
-        $rootScope.loggedIn = true;
-        $state.go('searchBar');
+      .then(function () {
+        Auth.checkMe().then(
+          function(resp) {
+            console.log('signed in')
+            if(resp.status == 200)
+              console.log('updating scope', Auth.whoMe())
+              $rootScope.loggedIn = true;
+              $rootScope.loggedInUser = Auth.whoMe();
+              $window.localStorage.setItem('com.sL', JSON.stringify(Auth.whoMe()));
+              $state.go('searchBar');
+          }
+        );
+        // $window.localStorage.setItem('com.sL', JSON.stringify({username:$scope.user.username}));
+        // $rootScope.loggedIn = true;
       })
       .catch(function (error) {
         console.log('auth.js signin >>', error);
@@ -23,6 +34,7 @@ angular.module('sL.auth', [])
     Auth.signup($scope.user)
       .then(function (token) {
         $window.localStorage.setItem('com.sL', true);
+        $rootScope.loggedIn = true;
         $state.go('searchBar');
       })
       .catch(function (error) {
@@ -37,6 +49,7 @@ angular.module('sL.auth', [])
       .then(function() {
         $window.localStorage.removeItem('com.sL');
         $rootScope.loggedIn = false;
+        $rootScope.loggedInUser = '';
         $state.go('searchBar')
       })
       .catch(function(error) {
@@ -48,9 +61,10 @@ angular.module('sL.auth', [])
   Auth.checkMe()
     .then(
       function(resp) {
+        console.log('checked: ', resp);
         if(resp.status == 200)
           $rootScope.loggedIn = true;
-          $scope.user = Auth.whoMe();
+          $rootScope.loggedInUser = Auth.whoMe();
           $window.localStorage.setItem('com.sL', JSON.stringify(Auth.whoMe()));
       }
     )
