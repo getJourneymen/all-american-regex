@@ -21,6 +21,11 @@ angular.module('sL.directives', ['d3'])
             var svg = d3.select($element[0])
                 .append("svg")
                 .append("g")
+                // .append("text")
+                // .attr("class", "legend")
+                // .attr("transform", "translate(0,0)")
+                // .attr('x', "50")
+                // .attr('y', "50")
 
               svg.append("g")
                 .attr("class", "slices");
@@ -29,8 +34,9 @@ angular.module('sL.directives', ['d3'])
               svg.append("g")
                 .attr("class", "lines");
 
-              var width = 300,
-                height = 300,
+
+              var width = 450,
+                height = 400,
                 radius = Math.min(width, height) / 2;
 
 
@@ -48,7 +54,7 @@ angular.module('sL.directives', ['d3'])
                 .innerRadius(radius * 0.9)
                 .outerRadius(radius * 0.9);
 
-              svg.attr("transform", "translate(" + width + "," + height*1.5 + ")");
+              svg.attr("transform", "translate(" + width+ "," + height + ")");
 
               var key = function(d) {
                 return d.data.label;
@@ -57,22 +63,23 @@ angular.module('sL.directives', ['d3'])
               var color = d3.scale.ordinal()
 
               function randomData() {
+
                 $scope.articleData = $scope.data.data[3-($scope.count)];
                 color
                   .domain([
-                    $scope.articleData.score.score +"%" ,
-                    $scope.articleData.emotion.score +"%",
-                    $scope.articleData.political.score +"%",
-                    $scope.articleData.personality.score +"%"
+                    " Positivity "+ $scope.data.data[$scope.count].score.score,
+                    $scope.data.data[$scope.count].emotion.renameThis +" "+ $scope.data.data[$scope.count].emotion.score,
+                    $scope.data.data[$scope.count].political.renameThis +" "+$scope.data.data[$scope.count].political.score,
+                    $scope.data.data[$scope.count].personality.renameThis +" "+ $scope.data.data[$scope.count].personality.score
                    ])
-                  .range(["#0086b3", "#007399", "#004d66", "#6b486b", "#00394d"]);
+                  .range(["#0086b3", "#007399", "#004d66", "#1ac6ff"]);
 
                 console.log('count in randomData call: ',$scope.count)
                 var labels = color.domain();
                 return labels.map(function(label) {
                   return {
                     label: label,
-                    value: parseInt(label)
+                    value: Math.random()
                   }
                 });
               }
@@ -126,7 +133,9 @@ angular.module('sL.directives', ['d3'])
 
                 text.enter()
                   .append("text")
-                  .attr("dy", ".35em")
+                  .attr("dy", ".5em")
+                  .attr("style", "font-size:24px")
+                  .attr("style", "font-weight: bold")
                   .text(function(d) {
                     return d.data.label;
                   });
